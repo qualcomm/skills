@@ -11,9 +11,8 @@
 
 # Project Name
 
-*\<update with your project name and a short description\>*
-
-Project that does ... implemented in ... runs on Qualcomm® *\<processor\>*
+Agent Skills for Qualcomm products. These skills can be installed into coding agents to run Qualcomm Product specific workflows.
+These skills can also be self discovered by Qualcomm Developer Tools.
 
 ## Branches
 
@@ -24,8 +23,8 @@ Project that does ... implemented in ... runs on Qualcomm® *\<processor\>*
 List requirements to run the project, how to install them, instructions to use docker container, etc...
 
 ## Installation Instructions
-
-How to install the software itself.
+Two Options : 
+1. Find the skills relevant to your product, OS combination and install the needed skills in your coding agent. Follow the instructions of your coding agent (e.g. for Claude, copy the skills in .skills directory).
 
 ## Usage
 
