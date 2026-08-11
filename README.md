@@ -25,10 +25,10 @@ List requirements to run the project, how to install them, instructions to use d
 ## Installation Instructions
 Two Options : 
 1. Find the skills relevant to your product, OS combination and install the needed skills in your coding agent. Follow the instructions of your coding agent (e.g. for Claude, copy the skills in .skills directory).
+2. Create a skills.json file in your Skills root with appropriate events. This will enable Qualcomm Developer tools to discover these skills.
 
 ## Usage
-
-Describe how to use the project.
+The skills in this repo should be used with the Agentic tools.
 
 ## Development
 
