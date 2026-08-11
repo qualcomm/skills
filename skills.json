@@ -1,0 +1,11 @@
+ {
+    "manifestVersion": 1,
+    "skills": [],
+    "sources": [
+      {
+        "type": "folder",
+        "path": "IOT/qualcomm-linux",
+        "ref": "main"
+      }
+    ]
+  }
