@@ -20,7 +20,12 @@
           "docPath": "IOT/qualcomm-linux/skills/configure-ethernet/qcs6490/SKILL.md",
           "files": ["IOT/qualcomm-linux/skills/configure-ethernet/qcs6490/**"],
           "compatibility": {
-            "devkits": ["qcs6490-rb3gen2-core-kit"],
+            "devkits": [
+              "qcs6490-rb3gen2-core-kit",
+              "qcs6490-rb3gen2-vision-kit",
+              "qcs6490-rb3gen2-vision-lite-kit",
+              "qcs6490-rubikpi3-kit"
+            ],
             "hostOs": [], "targetOs": [], "sdks": []
           }
         },
@@ -40,7 +45,7 @@
           "docPath": "IOT/qualcomm-linux/skills/configure-ethernet/iq-9075-mezzanine/SKILL.md",
           "files": ["IOT/qualcomm-linux/skills/configure-ethernet/iq-9075-mezzanine/**"],
           "compatibility": {
-            "devkits": ["qcs9075-iq-9075-evk-mezzanine"],
+            "devkits": ["qcs9075-iq-9075-evk"],
             "hostOs": [], "targetOs": [], "sdks": []
           }
         },
@@ -50,7 +55,7 @@
           "docPath": "IOT/qualcomm-linux/skills/configure-ethernet/iq-8275/SKILL.md",
           "files": ["IOT/qualcomm-linux/skills/configure-ethernet/iq-8275/**"],
           "compatibility": {
-            "devkits": ["qcs8275-iq-8275-evk"],
+            "devkits": ["qcs8275-iq-8275-evk-pro"],
             "hostOs": [], "targetOs": [], "sdks": []
           }
         },
@@ -60,7 +65,7 @@
           "docPath": "IOT/qualcomm-linux/skills/configure-ethernet/iq-8275-mezzanine/SKILL.md",
           "files": ["IOT/qualcomm-linux/skills/configure-ethernet/iq-8275-mezzanine/**"],
           "compatibility": {
-            "devkits": ["qcs8275-iq-8275-evk-mezzanine"],
+            "devkits": ["qcs8275-iq-8275-evk-pro"],
             "hostOs": [], "targetOs": [], "sdks": []
           }
         },
