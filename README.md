@@ -9,7 +9,7 @@
 - [ ] Review and update the suggested Issue and PR templates as needed in `.github/ISSUE_TEMPLATE` and `.github/PULL_REQUEST_TEMPLATE`
 - [ ] Remove this checklist
 
-# Project Name
+# Qualcomm SKILLS
 
 Agent Skills for Qualcomm products. These skills can be installed into coding agents to run Qualcomm Product specific workflows.
 These skills can also be self discovered by Qualcomm Developer Tools.
