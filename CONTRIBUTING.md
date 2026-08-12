@@ -1,4 +1,4 @@
-# Contributing to <REPLACE-ME>
+# Contributing to Qualcomm SKILLS
 
 Hi there!
 We’re thrilled that you’d like to contribute to this project.
@@ -11,39 +11,39 @@ In general, contributors should develop on branches based off of `main` and pull
 ## Submitting a pull request
 
 1. Please read our [code of conduct](CODE-OF-CONDUCT.md) and [license](LICENSE.txt).
-1. [Fork](https://github.com/qualcomm/skills/fork) and clone the repository.
+2. [Fork](https://github.com/qualcomm/skills/fork) and clone the repository.
 
     ```bash
     git clone https://github.com/<username>/skills.git
     ```
 
-1. Create a new branch based on `main`:
+3. Create a new branch based on `main`:
 
     ```bash
     git checkout -b <my-branch-name> main
     ```
 
-1. Create an upstream `remote` to make it easier to keep your branches up-to-date:
+4. Create an upstream `remote` to make it easier to keep your branches up-to-date:
 
     ```bash
     git remote add upstream https://github.com/qualcomm/skills.git
     ```
 
-1. Make your changes, add tests, and make sure the tests still pass.
-2. Work with Developer Tools team to ensure that the skills.json works with Qualcomm Developer Tools. Also ensure that the triggers for your skill are properly identified.
-1. Commit your changes using the [DCO](https://developercertificate.org/). You can attest to the DCO by commiting with the **-s** or **--signoff** options or manually adding the "Signed-off-by":
+5. Make your changes, add tests, and make sure the tests still pass.
+6. Work with Developer Tools team to ensure that the skills.json works with Qualcomm Developer Tools. Also ensure that the triggers for your skill are properly identified.
+7. Commit your changes using the [DCO](https://developercertificate.org/). You can attest to the DCO by committing with the **-s** or **--signoff** options or manually adding the "Signed-off-by":
 
     ```bash
-    git commit -s -m "Really useful commit message"`
+    git commit -s -m "Really useful commit message"
     ```
 
-1. After committing your changes on the topic branch, sync it with the upstream branch:
+8. After committing your changes on the topic branch, sync it with the upstream branch:
 
     ```bash
     git pull --rebase upstream main
     ```
 
-1. Push to your fork.
+9. Push to your fork.
 
     ```bash
     git push -u origin <my-branch-name>
@@ -51,8 +51,8 @@ In general, contributors should develop on branches based off of `main` and pull
 
     The `-u` is shorthand for `--set-upstream`. This will set up the tracking reference so subsequent runs of `git push` or `git pull` can omit the remote and branch.
 
-1. [Submit a pull request](https://github.com/qualcomm/skills/pulls) from your branch to `main`.
-1. Pat yourself on the back and wait for your pull request to be reviewed.
+10. [Submit a pull request](https://github.com/qualcomm/skills/pulls) from your branch to `main`.
+11. Pat yourself on the back and wait for your pull request to be reviewed.
 
 ## Security Analysis of Pull Requests
 
@@ -66,10 +66,9 @@ To maintain the security and integrity of this project, all pull requests from e
 
 By submitting a PR, you agree to participate in this process and help us keep the project secure for everyone.
 
-
 Here are a few things you can do that will increase the likelihood of your pull request to be accepted:
 
-- Follow the existing style where possible. **INSERT LINK TO STYLE, e.g. PEP8 for python**
+- Follow the existing style where possible.
 - Write tests.
 - Keep your change as focused as possible.
   If you want to make multiple independent changes, please consider submitting them as separate pull requests.

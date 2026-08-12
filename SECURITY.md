@@ -12,6 +12,7 @@ via our [Product Security team](mailto:product-security@qualcomm.com) or
 see our
 [Report a Bug](https://www.qualcomm.com/company/product-security/report-a-bug)
 page. Please include the following details while reporting a vulnerability:
+
 - Description of the vulnerability
 - Steps to reproduce
 - Affected versions
