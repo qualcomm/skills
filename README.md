@@ -25,7 +25,7 @@ List requirements to run the project, how to install them, instructions to use d
 ## Installation Instructions
 Two Options : 
 1. Find the skills relevant to your product, OS combination and install the needed skills in your coding agent. Follow the instructions of your coding agent (e.g. for Claude, copy the skills in .skills directory).
-2. Create a skills.json file in your Skills root with appropriate events. This will enable Qualcomm Developer tools to discover these skills.
+2. Create a skills.json file in your Skills root with appropriate events. This will enable Qualcomm Developer tools to discover these skills. The Skills.json file needs to be aligned with Qualcomm Developer Tools format. See the skills.json in some pre-existing skills on this repo.
 
 ## Usage
 The skills in this repo should be used with the Agentic tools.
@@ -36,14 +36,9 @@ How to develop new features/fixes for the software. Maybe different than "usage"
 
 ## Getting in Contact
 
-How to contact maintainers. E.g. GitHub Issues, GitHub Discussions could be indicated for many cases. However a mail list or list of Maintainer e-mails could be shared for other types of discussions. E.g.
-
 * [Report an Issue on GitHub](../../issues)
 * [Open a Discussion on GitHub](../../discussions)
-* [E-mail us](mailto:REPLACE-ME@qti.qualcomm.com) for general questions
 
 ## License
 
-*\<update with your project name and license\>*
-
-*\<REPLACE-ME\>* is licensed under the [REPLACE-ME with license name](https://spdx.org/licenses/REPLACE-ME-with-correct-URL-to-SPDX-license). See [LICENSE.txt](LICENSE.txt) for the full license text.
+*skills* is licensed under the [BSD-3-Clause-Clear License](https://spdx.org/licenses/BSD-3-Clause-Clear.html). See [LICENSE.txt](LICENSE.txt) for the full license text.
