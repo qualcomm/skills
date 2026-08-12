@@ -1,11 +1,16 @@
- {
-    "manifestVersion": 1,
-    "skills": [],
-    "sources": [
-      {
-        "type": "folder",
-        "path": "IOT/qualcomm-linux",
-        "ref": "main"
-      }
-    ]
-  }
+{
+  "manifestVersion": 1,
+  "skills": [],
+  "sources": [
+    {
+      "type": "repo",
+      "repo": "qualcomm-linux/qcom-linux-skills",
+      "ref": "main"
+    },
+    {
+      "type": "folder",
+      "path": "IOT/qualcomm-linux",
+      "ref": "main"
+    }
+  ]
+}
