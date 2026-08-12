@@ -1,14 +1,3 @@
-**After repository creation:**
-- [ ] Update this `README.md`. Update the Project Name, description, and all sections. Remove this checklist.
-- [ ] **Specify your license.** This template does NOT ship with a default license. Identify your project's approved license per your organization's license approval guidelines. 
-- [ ] **Create `LICENSE.txt`.** Replace the placeholder text in `LICENSE.txt` with the full text of your project's approved license.
-- [ ] **Update the License section** below to name your approved license and link to it.
-- [ ] Search this repo for "REPLACE-ME" and update all instances accordingly
-- [ ] Update `CONTRIBUTING.md` as needed
-- [ ] Review the workflows in `.github/workflows`, updating as needed. See https://docs.github.com/en/actions for information on what these files do and how they work.
-- [ ] Review and update the suggested Issue and PR templates as needed in `.github/ISSUE_TEMPLATE` and `.github/PULL_REQUEST_TEMPLATE`
-- [ ] Remove this checklist
-
 # Qualcomm SKILLS
 
 Agent Skills for Qualcomm products. These skills can be installed into coding agents to run Qualcomm Product specific workflows.
@@ -32,7 +21,7 @@ The skills in this repo should be used with the Agentic tools.
 
 ## Development
 
-How to develop new features/fixes for the software. Maybe different than "usage". Also provide details on how to contribute via a [CONTRIBUTING.md file](CONTRIBUTING.md).
+See [CONTRIBUTING.md file](CONTRIBUTING.md).
 
 ## Getting in Contact
 
@@ -42,3 +31,15 @@ How to develop new features/fixes for the software. Maybe different than "usage"
 ## License
 
 *skills* is licensed under the [BSD-3-Clause-Clear License](https://spdx.org/licenses/BSD-3-Clause-Clear.html). See [LICENSE.txt](LICENSE.txt) for the full license text.
+
+
+**Tasks remaining for this README file:**
+- [Done ] Update this `README.md`. Update the Project Name, description, and all sections. Remove this checklist.
+- [ Need License] **Specify your license.** This template does NOT ship with a default license. Identify your project's approved license per your organization's license approval guidelines. 
+- [ Need License] **Create `LICENSE.txt`.** Replace the placeholder text in `LICENSE.txt` with the full text of your project's approved license.
+- [ Need License] **Update the License section** below to name your approved license and link to it.
+- [Done ] Search this repo for "REPLACE-ME" and update all instances accordingly
+- [ ] Update `CONTRIBUTING.md` as needed
+- [ ] Review the workflows in `.github/workflows`, updating as needed. See https://docs.github.com/en/actions for information on what these files do and how they work.
+- [ ] Review and update the suggested Issue and PR templates as needed in `.github/ISSUE_TEMPLATE` and `.github/PULL_REQUEST_TEMPLATE`
+- [ ] Remove this checklist
