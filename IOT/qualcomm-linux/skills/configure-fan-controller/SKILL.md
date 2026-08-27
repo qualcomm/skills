@@ -2,27 +2,128 @@
 ---
 name: configure-fan-controller
 description: Configure the AMC6821 PWM fan controller on Qualcomm Linux (QLI 2.0) — source-level (DTS patch, kernel config, Yocto recipe) and runtime (sysfs over SSH). Platform: IQ-9075 EVK (QCS9075).
+
+id: iot.qualcomm-linux.configure.fan
+version: "1.0"
+status: approved
+
+tech_area: DTB Configuration
+skill_category: configuration
+
+confidence_level: advisory
+output_type: procedure
+
+depends_on:
+related_skills:
+
+applicable_products:
+  - QCS9075
+  - IQ-9075 EVK
+applicable_releases:
+  - ">=QLI 2.0"
+region: global
+
+required_inputs:
+  - action
+  - source_dir
+  - active_device
+  - pwm_value
+  - point1_temp
+  - point2_temp
+  - point3_temp
+  - hwmon_num
+  - platform
+
+document_references:
+  - id: dragonwingdocs.qualcomm.com
+    revision: unknown
+    title: Qualcomm DragonWing Documentation
+    section: Fan Controller Configuration
+    relationship: informational
+
+known_gaps:
+  - Does not cover platforms other than IQ-9075 EVK (QCS9075)
+  - Does not cover fan controllers other than the TI AMC6821
+  - Does not cover fan controllers connected via SPI or GPIO (only I2C-based)
+  - Persistent runtime configuration via systemd is described but not fully automated end-to-end
+  - Does not cover thermal zone tuning beyond the AMC6821 cooling map in the device tree
+  - Does not cover building the kernel outside the Yocto/kas-container workflow
+  - Does not cover QLI releases prior to 2.0
+  - Does not cover reverting DTS or kernel config changes once applied (manual rollback required)
 ---
 
 # Configure Temperature Regulation with Fan Controller
 
-This skill helps configure the AMC6821 PWM fan controller on Qualcomm Linux (QLI 2.0)
-platforms — both at the **source level** (DTS, kernel config, Yocto recipe) and at
-**runtime** (sysfs nodes on a running device).
+## Purpose & Scope
+
+Covers configuration of the TI AMC6821 PWM fan controller on the IQ-9075 EVK (QCS9075) platform running Qualcomm Linux (QLI 2.0). Supports both **source-level** configuration (DTS patch, kernel config fragment, Yocto recipe edit) and **runtime** configuration (sysfs nodes on a running device via SSH through the qualcomm-ide MCP).
+
+The AMC6821 is connected to the IQ-9075 EVK via I2C19 (QUP2 SE5) using GPIO99 (SDA) and GPIO100 (SCL), at I2C address `0x18`.
+
+**In scope:**
+- Creating and registering a DTS patch to enable I2C19 and the AMC6821 node in the QLI 2.0 Yocto tree
+- Enabling `CONFIG_SENSORS_AMC6821` and `CONFIG_HWMON` in the kernel config fragment
+- Runtime fan mode switching: automatic (temperature-controlled) and manual (fixed PWM)
+- Runtime temperature threshold configuration via sysfs
+- Fan controller status reporting (mode, PWM value, RPM, temperature)
+- Optional systemd service creation for runtime persistence across reboots
+
+**Out of scope:**
+- Platforms other than IQ-9075 EVK (QCS9075)
+- Fan controllers other than the TI AMC6821
+- Fan controllers connected via SPI or GPIO
+- Thermal zone tuning beyond the AMC6821 cooling map
+- Building the kernel outside the Yocto/kas-container workflow
+- Reverting DTS or kernel config changes (manual rollback required)
+- QLI releases prior to 2.0
+
+
+## When to Use This Skill
+
+**Invoke this skill when:**
+- User wants to enable or configure the AMC6821 fan controller on IQ-9075 EVK running QLI 2.0
+- User asks how to add fan control support to the QLI 2.0 kernel build
+- User wants to set fan speed, change fan mode, or adjust temperature thresholds at runtime
+- User needs to make fan controller settings persist across reboots
+
+**Example queries:**
+- "How do I enable the fan controller on IQ-9075 EVK?"
+- "How do I set the fan to automatic mode on QCS9075?"
+- "How do I configure the AMC6821 temperature thresholds?"
+- "How do I add AMC6821 support to the QLI 2.0 Yocto build?"
+
+**Do not invoke this skill when:**
+- The target platform is not an IQ-9075 EVK (QCS9075)
+- The fan controller is not the TI AMC6821
+- The user is asking about thermal management features other than the AMC6821 cooling map
+
+
+## Required Inputs
+
+Before applying this skill, the agent must have confirmed:
+
+| Input | Description | Example |
+|---|---|---|
+| `action` | Operation to perform; one of `status`, `enable-dts`, `kernel-config`, `auto-mode`, `manual-mode`, `set-thresholds`, `status-runtime`, `all-source`, `all-runtime` | `auto-mode` |
+| `source_dir` | Absolute path to the root of the QLI 2.0 checkout (required for all source-level actions; must contain `meta-qcom/`) | `/home/user/my-qli20-checkout` |
+| `active_device` | Currently selected device in qualcomm-ide MCP (required for all runtime actions) | IQ-9075 EVK via SSH |
+| `pwm_value` | Fan PWM value 0–255 (for `manual-mode` action) | `128` |
+| `point1_temp` | Fan-off threshold in °C (for `set-thresholds` action, default `0`) | `0` |
+| `point2_temp` | Minimum-speed threshold in °C (for `set-thresholds` action, default `48`) | `48` |
+| `point3_temp` | Full-speed threshold in °C (for `set-thresholds` action, default `58`) | `58` |
+| `hwmon_num` | hwmon index number (optional — auto-detected from `amc6821` name, fallback `0`) | `0` |
+| `platform` | Target platform (optional — default `iq-9075`) | `iq-9075` |
+
+If any required input is missing, the agent should prompt the user before proceeding.
+
+
+## Procedure / Decision Logic
 
 The user provided these arguments: "$ARGUMENTS"
 
 ---
 
-## Supported Platforms
-
-| Platform | Chip | Fan Controller | Interface | GPIO |
-|----------|------|----------------|-----------|------|
-| IQ-9075 EVK | QCS9075 (Lemans) | TI AMC6821SQDBQRQ1 | I2C19 (QUP2 SE5) | GPIO99 (SDA), GPIO100 (SCL) |
-
----
-
-## Step 1 — Parse requested action and resolve source directory
+### Step 1 — Parse requested action and resolve source directory
 
 Parse `$ARGUMENTS` to extract:
 - `action`: one of `status`, `enable-dts`, `kernel-config`, `auto-mode`, `manual-mode`,
@@ -55,11 +156,11 @@ then ask the user which action to perform.
 
 ---
 
-## Step 2 — Source-level actions (QLI 2.0 tree)
+### Step 2 — Source-level actions (QLI 2.0 tree)
 
 These actions modify source files in the QLI 2.0 Yocto tree. Use the `Bash` and `Edit`/`Write` tools.
 
-### action=status (source)
+#### action=status (source)
 
 Report what currently exists in the tree:
 
@@ -81,7 +182,7 @@ Display the results and summarise what is already present vs what needs to be ad
 
 ---
 
-### action=enable-dts
+#### action=enable-dts
 
 Enable the AMC6821 fan controller in the IQ-9075 EVK device tree.
 
@@ -93,7 +194,7 @@ Enable the AMC6821 fan controller in the IQ-9075 EVK device tree.
 Because the kernel source is fetched during build, changes are delivered as a **patch file**
 placed in the Yocto layer. Follow these steps:
 
-#### Step 2a — Create the DTS patch file
+**Step 2a — Create the DTS patch file**
 
 Create the patch at:
 ```
@@ -166,7 +267,7 @@ diff --git a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts \
 > platform's `lemans.dtsi`. Check `arch/arm64/boot/dts/qcom/lemans.dtsi` in the kernel
 > source for the actual zone and trip-point names. Adjust the patch accordingly.
 
-#### Step 2b — Register the patch in linux-qcom_6.18.bb
+**Step 2b — Register the patch in linux-qcom_6.18.bb**
 
 Add the patch to `SRC_URI` in:
 ```
@@ -183,7 +284,7 @@ that these changes will be applied during the next `kas-container build`.
 
 ---
 
-### action=kernel-config
+#### action=kernel-config
 
 Enable the AMC6821 hwmon driver in the kernel config fragment.
 
@@ -210,7 +311,7 @@ Steps:
 
 ---
 
-### action=all-source
+#### action=all-source
 
 Run in sequence: `status` → `kernel-config` → `enable-dts`.
 
@@ -218,7 +319,7 @@ Display a summary of all files modified.
 
 ---
 
-## Step 3 — Runtime actions (on a running device)
+### Step 3 — Runtime actions (on a running device)
 
 These actions interact with the live device over SSH. They require an active SSH connection.
 
@@ -244,7 +345,7 @@ Store result as `HWMON`. If empty, warn user and fall back to `hwmon0`.
 
 ---
 
-### action=status-runtime
+#### action=status-runtime
 
 Show full fan controller state on the running device:
 
@@ -273,7 +374,7 @@ echo \"point3 (max speed)    : \$(cat \$BASE/temp2_auto_point3_temp 2>/dev/null)
 
 ---
 
-### action=auto-mode
+#### action=auto-mode
 
 Switch to automatic temperature-controlled fan speed (default/recommended):
 
@@ -286,7 +387,7 @@ Confirm output is `2`. Note: this setting resets on reboot.
 
 ---
 
-### action=manual-mode
+#### action=manual-mode
 
 Switch to manual mode and set a specific fan speed (`pwm_value` = 0–255):
 
@@ -305,7 +406,7 @@ Warn: settings reset on reboot. For persistence, create a systemd unit (see Step
 
 ---
 
-### action=set-thresholds
+#### action=set-thresholds
 
 Set custom automatic-mode temperature thresholds (values in °C, converted to milli°C):
 
@@ -334,13 +435,13 @@ Warn: thresholds reset on reboot unless persisted.
 
 ---
 
-### action=all-runtime
+#### action=all-runtime
 
 Run in sequence: `status-runtime` → ask user which runtime config to apply.
 
 ---
 
-## Step 4 — Persistence (optional)
+### Step 4 — Persistence (optional)
 
 To persist manual mode or custom thresholds across reboots, create a systemd one-shot service:
 
@@ -381,7 +482,7 @@ $SSH "systemctl status fan-controller.service"
 
 ---
 
-## Step 5 — Report results
+### Step 5 — Report results
 
 After every action:
 1. Show the exact commands run and their output.
@@ -444,3 +545,9 @@ cd $source_dir
 ```
 
 Where `$source_dir` is the root of the user's QLI 2.0 checkout.
+
+### Supported Platforms
+
+| Platform | Chip | Fan Controller | Interface | GPIO |
+|----------|------|----------------|-----------|------|
+| IQ-9075 EVK | QCS9075 (Lemans) | TI AMC6821SQDBQRQ1 | I2C19 (QUP2 SE5) | GPIO99 (SDA), GPIO100 (SCL) |
