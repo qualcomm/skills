@@ -8,6 +8,11 @@
       "ref": "main"
     },
     {
+      "type": "repo",
+      "repo": "qualcomm/qimsdk-agentic-skills",
+      "ref": "main"
+    },
+    {
       "type": "folder",
       "path": "IOT/qualcomm-linux",
       "ref": "main"
